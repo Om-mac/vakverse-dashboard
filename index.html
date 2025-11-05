@@ -2,43 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Om's Smart Door Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { background: #0d1117; color: #f0f6fc; font-family: Arial; text-align: center; padding-top: 40px; }
-    h1 { color: #58a6ff; }
-    .card { display: inline-block; background: #161b22; padding: 20px; margin: 10px; border-radius: 10px; width: 160px; box-shadow: 0 0 10px rgba(88,166,255,0.3); }
-    .value { font-size: 2em; margin-top: 10px; }
-    .status { margin-top: 30px; color: #8b949e; }
-  </style>
-</head>
-<body>
-  <h1>🚀 Om's Live Home Dashboard</h1>
-  <div class="card"><h3>🌡 Temp</h3><div class="value" id="temp">--</div></div>
-  <div class="card"><h3>💧 Humidity</h3><div class="value" id="hum">--</div></div>
-  <div class="card"><h3>🧪 MQ2 Gas</h3><div class="value" id="mq2">--</div></div>
-  <div class="card"><h3>🧪 MQ6 Gas</h3><div class="value" id="mq6">--</div></div>
-  <div class="card"><h3>🔥 Flame</h3><div class="value" id="flame">--</div></div>
+  <title>🏠 Smart Home Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <div class="status">Last Updated: <span id="time">--</span></div>
+  <style>
+    /* === General Layout === */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #74ABE2, #5563DE);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* === Sensor Cards === */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      width: 90%;
+      max-width: 900px;
+    }
+
+    .sensor {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .sensor:hover {
+      transform: translateY(-5px);
+    }
+
+    .icon {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .label {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .value {
+      font-size: 1.8em;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* === Door Button === */
+    .btn {
+      margin-top: 40px;
+      padding: 15px 40px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 30px;
+      background: #00C896;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 200, 150, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #00B588;
+      box-shadow: 0 8px 20px rgba(0, 200, 150, 0.6);
+      transform: scale(1.05);
+    }
+
+    /* === Status Section === */
+    .status {
+      margin-top: 30px;
+      font-size: 1.1em;
+      color: #f8f9fa;
+      opacity: 0.8;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 0.9em;
+      color: #e0e0e0;
+      opacity: 0.7;
+    }
+
+    /* === Animation === */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .sensor {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .alert {
+      color: #ff4d4d;
+      font-weight: bold;
+    }
+  </style>
 
   <script>
-    async function refreshData() {
+    const API_BASE = "https://vakverse-backend.onrender.com";
+
+    async function fetchData() {
       try {
-        const res = await fetch("https://vakverse-flask.onrender.com/get_data");
+        const res = await fetch(`${API_BASE}/data`);
         const data = await res.json();
-        document.getElementById("temp").textContent = data.temp || "--";
-        document.getElementById("hum").textContent = data.hum || "--";
-        document.getElementById("mq2").textContent = data.mq2 || "--";
-        document.getElementById("mq6").textContent = data.mq6 || "--";
-        document.getElementById("flame").textContent = data.flame || "--";
-        document.getElementById("time").textContent = new Date().toLocaleTimeString();
-      } catch (e) {
-        console.error(e);
+
+        document.getElementById("temp").innerText = data.temp + " °C";
+        document.getElementById("hum").innerText = data.hum + " %";
+        document.getElementById("mq2").innerText = data.mq2;
+        document.getElementById("mq6").innerText = data.mq6;
+        document.getElementById("flame").innerText =
+          data.flame == 0 ? "🔥 Detected ⚠️" : "✅ Safe";
+
+        const flameCard = document.getElementById("flameCard");
+        if (data.flame == 0) {
+          flameCard.style.boxShadow = "0 0 25px rgba(255, 77, 77, 0.8)";
+          document.getElementById("flame").classList.add("alert");
+        } else {
+          flameCard.style.boxShadow = "0 10px 20px rgba(0, 0, 0, 0.2)";
+          document.getElementById("flame").classList.remove("alert");
+        }
+
+      } catch (err) {
+        console.error("Failed to fetch data:", err);
       }
     }
-    setInterval(refreshData, 500); // refresh every 2 seconds
-    refreshData();
+
+    async function openDoor() {
+      try {
+        const res = await fetch(`${API_BASE}/open-door`);
+        const msg = await res.json();
+        alert(msg.status || "Door command sent!");
+      } catch (err) {
+        alert("Failed to send door command.");
+      }
+    }
+
+    setInterval(fetchData, 1000); // auto-refresh every 1 sec
+    window.onload = fetchData;
   </script>
+</head>
+
+<body>
+  <h1>🏠 Smart Home Dashboard</h1>
+
+  <div class="dashboard">
+    <div class="sensor">
+      <div class="icon">🌡</div>
+      <div class="label">Temperature</div>
+      <div class="value" id="temp">-- °C</div>
+    </div>
+
+    <div class="sensor">
+      <div class="icon">💧</div>
+      <div class="label">Humidity</div>
+      <div class="value" id="hum">-- %</div>
+    </div>
+
+    <div class="sensor">
+      <div class="icon">🔥</div>
+      <div class="label">MQ2 Sensor</div>
+      <div class="value" id="mq2">--</div>
+    </div>
+
+    <div class="sensor">
+      <div class="icon">🌫</div>
+      <div class="label">MQ6 Sensor</div>
+      <div class="value" id="mq6">--</div>
+    </div>
+
+    <div class="sensor" id="flameCard">
+      <div class="icon">🚨</div>
+      <div class="label">Flame Detection</div>
+      <div class="value" id="flame">--</div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="openDoor()">🔓 Open Door</button>
+
+  <div class="status">Live data updating from Vakverse Backend...</div>
+  <footer>© 2025 Smart IoT Project — Designed by Om Tapdiya</footer>
 </body>
 </html>
