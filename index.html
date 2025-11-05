@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>🏠 Smart Home Dashboard</title>
@@ -104,8 +105,15 @@
 
     /* === Animation === */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .sensor {
@@ -119,6 +127,25 @@
   </style>
 
   <script>
+    // === Auto-Ping to keep backend awake ===
+    const BACKEND_URL = "https://vakverse-backend.onrender.com";
+
+    async function pingBackend() {
+      try {
+        await fetch(`${BACKEND_URL}/data`, { cache: "no-store" });
+        console.log("✅ Backend pinged to stay awake");
+      } catch (err) {
+        console.warn("⚠️ Ping failed:", err);
+      }
+    }
+
+    // Call once on page load
+    pingBackend();
+
+    // Repeat every 10 minutes (600 000 ms)
+    setInterval(pingBackend, 600000);
+
+
     const API_BASE = "https://vakverse-backend.onrender.com";
 
     async function fetchData() {
@@ -159,6 +186,9 @@
 
     setInterval(fetchData, 1000); // auto-refresh every 1 sec
     window.onload = fetchData;
+  </script>
+  <script>
+
   </script>
 </head>
 
@@ -202,4 +232,5 @@
   <div class="status">Live data updating from Vakverse Backend...</div>
   <footer>© 2025 Smart IoT Project — Designed by Om Tapdiya</footer>
 </body>
+
 </html>
