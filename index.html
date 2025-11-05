@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vakverse Smart Door Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background: #0d1117; color: #f0f6fc; font-family: Arial; text-align: center; padding-top: 40px; }
+    h1 { color: #58a6ff; }
+    .card { display: inline-block; background: #161b22; padding: 20px; margin: 10px; border-radius: 10px; width: 160px; box-shadow: 0 0 10px rgba(88,166,255,0.3); }
+    .value { font-size: 2em; margin-top: 10px; }
+    .status { margin-top: 30px; color: #8b949e; }
+  </style>
+</head>
+<body>
+  <h1>🚀 Vakverse Live Dashboard</h1>
+  <div class="card"><h3>🌡 Temp</h3><div class="value" id="temp">--</div></div>
+  <div class="card"><h3>💧 Humidity</h3><div class="value" id="hum">--</div></div>
+  <div class="card"><h3>🧪 MQ2 Gas</h3><div class="value" id="mq2">--</div></div>
+  <div class="card"><h3>🧪 MQ6 Gas</h3><div class="value" id="mq6">--</div></div>
+  <div class="card"><h3>🔥 Flame</h3><div class="value" id="flame">--</div></div>
+
+  <div class="status">Last Updated: <span id="time">--</span></div>
+
+  <script>
+    async function refreshData() {
+      try {
+        const res = await fetch("https://vakverse-flask.onrender.com/get_data");
+        const data = await res.json();
+        document.getElementById("temp").textContent = data.temp || "--";
+        document.getElementById("hum").textContent = data.hum || "--";
+        document.getElementById("mq2").textContent = data.mq2 || "--";
+        document.getElementById("mq6").textContent = data.mq6 || "--";
+        document.getElementById("flame").textContent = data.flame || "--";
+        document.getElementById("time").textContent = new Date().toLocaleTimeString();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    setInterval(refreshData, 2000); // refresh every 2 seconds
+    refreshData();
+  </script>
+</body>
+</html>
