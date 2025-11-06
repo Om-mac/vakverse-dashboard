@@ -1,3 +1,7 @@
+/* ================================================ */
+/* 🌐 GLOBAL STYLES — MASTER OPTIMIZED VERSION       */
+/* ================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 * {
@@ -5,6 +9,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -15,70 +20,90 @@ body {
   align-items: center;
   min-height: 100vh;
   overflow-x: hidden;
-  padding: 2rem;
+  padding: 1.5rem;
+  scroll-behavior: smooth;
 }
 
-/* HEADER */
+/* ================================================ */
+/* 🧠 HEADER SECTION                                */
+/* ================================================ */
+
 header {
   text-align: center;
   margin-bottom: 2rem;
 }
+
 header h1 {
-  font-size: 2.4rem;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
   font-weight: 700;
   letter-spacing: 1px;
 }
+
 header p {
-  opacity: 0.8;
-  font-size: 1rem;
+  opacity: 0.85;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   margin-top: 0.5rem;
 }
 
-/* DASHBOARD */
+/* ================================================ */
+/* 📊 DASHBOARD GRID                               */
+/* ================================================ */
+
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
   width: 100%;
-  max-width: 900px;
+  max-width: 950px;
   margin-bottom: 2.5rem;
+  transition: all 0.3s ease;
 }
 
 .sensor-card {
-  padding: 1.8rem 1.5rem;
+  padding: 1.6rem 1.4rem;
   border-radius: 1.2rem;
   text-align: center;
-  transition: all 0.3s ease;
   backdrop-filter: blur(15px);
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .sensor-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
-}
-
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.45);
 }
 
 .icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.8rem;
+  font-size: 2.4rem;
+  margin-bottom: 0.7rem;
+  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.4));
 }
+
 .label {
   font-weight: 600;
   margin-bottom: 0.3rem;
+  font-size: 1rem;
+  opacity: 0.9;
 }
+
 .value {
   font-size: 1.3rem;
   font-weight: 700;
   color: #00e5ff;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
 }
 
-/* BUTTON */
+/* ================================================ */
+/* 🎛️ CONTROLS & BUTTONS                           */
+/* ================================================ */
+
 .controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
 
@@ -94,25 +119,28 @@ header p {
   transition: all 0.3s ease;
   box-shadow: 0 3px 15px rgba(0, 153, 255, 0.4);
 }
-.btn:hover {
+
+.btn:hover,
+.btn:active {
   transform: scale(1.05);
   background: linear-gradient(135deg, #33f3ff, #00b3ff);
   box-shadow: 0 5px 25px rgba(0, 153, 255, 0.6);
 }
 
-/* FOOTER */
-footer {
-  text-align: center;
-  opacity: 0.8;
-  font-size: 0.9rem;
-}
-footer b {
-  color: #00e5ff;
+/* ✅ Success / Error Glows */
+.btn.success {
+  background: linear-gradient(135deg, #00ff99, #00cc66);
+  box-shadow: 0 0 25px rgba(0, 255, 150, 0.6);
 }
 
-/* ============================== */
-/* 🔐 DOOR CONTROL (Master Style) */
-/* ============================== */
+.btn.error {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  box-shadow: 0 0 25px rgba(255, 100, 100, 0.6);
+}
+
+/* ================================================ */
+/* 🚪 DOOR CONTROL MODULE                           */
+/* ================================================ */
 
 .door-control {
   display: flex;
@@ -120,12 +148,16 @@ footer b {
   align-items: center;
   gap: 0.8rem;
   padding: 1rem;
+  width: 100%;
+  max-width: 400px;
 }
 
 #doorInputWrapper {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
   transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
 }
 
 .hidden {
@@ -133,21 +165,24 @@ footer b {
   transform: scaleY(0);
   height: 0;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .door-input {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   border-radius: 10px;
   border: none;
   outline: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
   font-size: 1rem;
   letter-spacing: 1px;
+  width: 65%;
+  text-align: center;
 }
 
 .confirm-btn {
-  padding: 0.5rem 0.9rem;
+  padding: 0.6rem 1rem;
   border: none;
   border-radius: 10px;
   background: #4caf50;
@@ -163,7 +198,9 @@ footer b {
 .status-text {
   font-size: 0.95rem;
   transition: color 0.3s ease;
+  text-align: center;
 }
+
 .status-success {
   color: #4caf50;
 }
@@ -182,13 +219,94 @@ footer b {
   75% { transform: translateX(-5px); }
 }
 
-/* 🌈 Glowing button states */
-.btn.success {
-  background: linear-gradient(135deg, #00ff99, #00cc66);
-  box-shadow: 0 0 25px rgba(0, 255, 150, 0.6);
+/* ================================================ */
+/* 🦶 FOOTER SECTION                                */
+/* ================================================ */
+
+footer {
+  text-align: center;
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin-top: auto;
+  padding-bottom: 1rem;
+}
+footer b {
+  color: #00e5ff;
 }
 
-.btn.error {
-  background: linear-gradient(135deg, #ff4444, #cc0000);
-  box-shadow: 0 0 25px rgba(255, 100, 100, 0.6);
+/* ================================================ */
+/* 📱 RESPONSIVE DESIGN                             */
+/* ================================================ */
+
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .dashboard {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .sensor-card {
+    padding: 1.2rem 1rem;
+  }
+
+  .icon {
+    font-size: 2rem;
+  }
+
+  .value {
+    font-size: 1.1rem;
+  }
+
+  .btn {
+    padding: 0.7rem 1.8rem;
+    font-size: 1rem;
+  }
 }
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.7rem;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .door-input {
+    width: 60%;
+  }
+
+  #doorInputWrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .confirm-btn {
+    width: 60%;
+  }
+
+  footer {
+    font-size: 0.8rem;
+  }
+}
+
+/* ================================================ */
+/* ✨ SMOOTH ANIMATIONS + INTERACTION FEEDBACK      */
+/* ================================================ */
+
+@media (hover: none) {
+  .btn:hover,
+  .sensor-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* END OF MASTER CSS */
