@@ -1,20 +1,3 @@
-// === Auto-Ping to keep backend awake ===
-const BACKEND_URL = "https://vakverse-backend.onrender.com";
-
-async function pingBackend() {
-  try {
-    await fetch(`${BACKEND_URL}/data`, { cache: "no-store" });
-    console.log("✅ Backend pinged to stay awake");
-  } catch (err) {
-    console.warn("⚠️ Ping failed:", err);
-  }
-}
-
-// Call once on page load
-pingBackend();
-
-// Repeat every 10 minutes
-setInterval(pingBackend, 600000);
 
 const API_BASE = "https://vakverse-backend.onrender.com";
 
