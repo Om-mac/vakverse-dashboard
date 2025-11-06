@@ -1,57 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>🏠 Smart Home Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Link to external CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <h1>🏠 Smart Home Management</h1>
+  <header>
+    <h1>🏠 Smart Home Dashboard</h1>
+    <p>Monitor and control your environment in real-time</p>
+  </header>
 
-  <div class="dashboard">
-    <div class="sensor">
-      <div class="icon">🌡</div>
+  <main class="dashboard">
+    <div class="sensor-card glass" id="tempCard">
+      <div class="icon">🌡️</div>
       <div class="label">Temperature</div>
       <div class="value" id="temp">-- °C</div>
     </div>
 
-    <div class="sensor">
+    <div class="sensor-card glass" id="humCard">
       <div class="icon">💧</div>
       <div class="label">Humidity</div>
       <div class="value" id="hum">-- %</div>
     </div>
 
-    <div class="sensor">
+    <div class="sensor-card glass" id="mq2Card">
       <div class="icon">🔥</div>
       <div class="label">MQ2 Sensor</div>
       <div class="value" id="mq2">--</div>
     </div>
 
-    <div class="sensor">
-      <div class="icon">🌫</div>
+    <div class="sensor-card glass" id="mq6Card">
+      <div class="icon">🌫️</div>
       <div class="label">MQ6 Sensor</div>
       <div class="value" id="mq6">--</div>
     </div>
 
-    <div class="sensor" id="flameCard">
+    <div class="sensor-card glass" id="flameCard">
       <div class="icon">🚨</div>
       <div class="label">Flame Detection</div>
       <div class="value" id="flame">--</div>
     </div>
-  </div>
+  </main>
 
-  <button class="btn" onclick="openDoor()">🔓 Open Door</button>
+  <section class="controls">
+    <button class="btn glass" onclick="openDoor()">🔓 Open Door</button>
+  </section>
 
-  <div class="status">Live data updating from Vakverse Backend...!</div>
-  <footer>© 2025 Smart IoT Project — Designed by Om Tapdiya</footer>
+  <footer>
+    <p>🔗 Live data updating from <b>Vakverse Backend</b></p>
+    <small>© 2025 Smart IoT Project — Designed by <b>Om Tapdiya</b></small>
+  </footer>
 
-  <!-- Link to external JS -->
   <script src="script.js"></script>
 </body>
-
 </html>

@@ -1,114 +1,110 @@
-/* === General Layout === */
-body {
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #74ABE2, #5563DE);
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: radial-gradient(ellipse at top left, #141e30, #243b55);
+  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  color: #fff;
-  overflow: hidden;
+  overflow-x: hidden;
+  padding: 2rem;
 }
 
-h1 {
-  font-size: 2.5em;
-  margin-bottom: 30px;
+/* HEADER */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+header h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
   letter-spacing: 1px;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+header p {
+  opacity: 0.8;
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }
 
-/* === Sensor Cards === */
+/* DASHBOARD */
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
-  width: 90%;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
   max-width: 900px;
+  margin-bottom: 2.5rem;
 }
 
-.sensor {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-  animation: fadeIn 0.8s ease-in-out;
+.sensor-card {
+  padding: 1.8rem 1.5rem;
+  border-radius: 1.2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(15px);
 }
 
-.sensor:hover {
+.sensor-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
 }
 
 .icon {
-  font-size: 2.5em;
-  margin-bottom: 10px;
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
 }
-
 .label {
-  font-size: 1.1em;
-  opacity: 0.9;
-}
-
-.value {
-  font-size: 1.8em;
   font-weight: 600;
-  margin-top: 8px;
+  margin-bottom: 0.3rem;
+}
+.value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #00e5ff;
 }
 
-/* === Door Button === */
+/* BUTTON */
+.controls {
+  margin-bottom: 2rem;
+}
 .btn {
-  margin-top: 40px;
-  padding: 15px 40px;
-  font-size: 1.2em;
+  font-size: 1.1rem;
+  padding: 0.8rem 2rem;
   border: none;
-  border-radius: 30px;
-  background: #00C896;
-  color: #fff;
+  border-radius: 2rem;
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0, 200, 150, 0.4);
+  background: linear-gradient(135deg, #00e5ff, #0099ff);
+  color: #fff;
+  font-weight: 600;
   transition: all 0.3s ease;
+  box-shadow: 0 3px 15px rgba(0, 153, 255, 0.4);
 }
-
 .btn:hover {
-  background: #00B588;
-  box-shadow: 0 8px 20px rgba(0, 200, 150, 0.6);
   transform: scale(1.05);
+  background: linear-gradient(135deg, #33f3ff, #00b3ff);
+  box-shadow: 0 5px 25px rgba(0, 153, 255, 0.6);
 }
 
-/* === Status Section === */
-.status {
-  margin-top: 30px;
-  font-size: 1.1em;
-  color: #f8f9fa;
-  opacity: 0.8;
-}
-
+/* FOOTER */
 footer {
-  position: absolute;
-  bottom: 15px;
-  font-size: 0.9em;
-  color: #e0e0e0;
-  opacity: 0.7;
+  text-align: center;
+  opacity: 0.8;
+  font-size: 0.9rem;
 }
-
-/* === Animation === */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.alert {
-  color: #ff4d4d;
-  font-weight: bold;
+footer b {
+  color: #00e5ff;
 }
