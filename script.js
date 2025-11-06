@@ -1,6 +1,20 @@
-
 const API_BASE = "https://vakverse-backend.onrender.com";
 
+// Toggle password field visibility
+function toggleDoorInput() {
+  const wrapper = document.getElementById("doorInputWrapper");
+  const btn = document.getElementById("doorBtn");
+
+  if (wrapper.classList.contains("hidden")) {
+    wrapper.classList.remove("hidden");
+    btn.innerText = "🔓 Enter Password";
+  } else {
+    wrapper.classList.add("hidden");
+    btn.innerText = "🔒 Open Door";
+  }
+}
+
+// Fetch and update sensor data
 async function fetchData() {
   try {
     const res = await fetch(`${API_BASE}/data`);
@@ -26,15 +40,58 @@ async function fetchData() {
   }
 }
 
+// Master-style door unlock flow
 async function openDoor() {
-  try {
-    const res = await fetch(`${API_BASE}/open-door`);
-    const msg = await res.json();
-    alert(msg.status || "Door command sent!");
-  } catch (err) {
-    alert("Failed to send door command.");
+  const passwordInput = document.getElementById("doorPassword");
+  const password = passwordInput.value.trim();
+  const status = document.getElementById("doorStatus");
+  const doorBtn = document.getElementById("doorBtn");
+
+  if (!password) {
+    status.innerText = "⚠️ Please enter the password.";
+    status.className = "status-text status-fail";
+    passwordInput.focus();
+    return;
   }
+
+  // Show verifying animation
+  doorBtn.innerText = "⏳ Verifying...";
+  doorBtn.disabled = true;
+
+  try {
+    const res = await fetch(`${API_BASE}/open-door`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password })
+    });
+
+    const msg = await res.json();
+
+    if (res.ok) {
+      status.innerText = "✅ Door Opened Successfully!";
+      status.className = "status-text status-success";
+      doorBtn.innerText = "✅ Door Opened";
+      passwordInput.value = "";
+    } else {
+      status.innerText = "🚫 Access Denied";
+      status.className = "status-text status-fail shake";
+      setTimeout(() => status.classList.remove("shake"), 300);
+      doorBtn.innerText = "🔒 Try Again";
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    status.innerText = "⚠️ Connection error.";
+    status.className = "status-text status-fail";
+    doorBtn.innerText = "🔒 Try Again";
+  }
+
+  // Reset after a short delay
+  setTimeout(() => {
+    doorBtn.disabled = false;
+    doorBtn.innerText = "🔒 Open Door";
+    document.getElementById("doorInputWrapper").classList.add("hidden");
+  }, 2500);
 }
 
-setInterval(fetchData, 1000); // auto-refresh every second
+setInterval(fetchData, 1000);
 window.onload = fetchData;

@@ -81,6 +81,7 @@ header p {
 .controls {
   margin-bottom: 2rem;
 }
+
 .btn {
   font-size: 1.1rem;
   padding: 0.8rem 2rem;
@@ -107,4 +108,87 @@ footer {
 }
 footer b {
   color: #00e5ff;
+}
+
+/* ============================== */
+/* 🔐 DOOR CONTROL (Master Style) */
+/* ============================== */
+
+.door-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+}
+
+#doorInputWrapper {
+  display: flex;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.hidden {
+  opacity: 0;
+  transform: scaleY(0);
+  height: 0;
+  overflow: hidden;
+}
+
+.door-input {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.confirm-btn {
+  padding: 0.5rem 0.9rem;
+  border: none;
+  border-radius: 10px;
+  background: #4caf50;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+.confirm-btn:hover {
+  background: #45a049;
+}
+
+.status-text {
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+.status-success {
+  color: #4caf50;
+}
+.status-fail {
+  color: #ff5252;
+}
+
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+/* 🌈 Glowing button states */
+.btn.success {
+  background: linear-gradient(135deg, #00ff99, #00cc66);
+  box-shadow: 0 0 25px rgba(0, 255, 150, 0.6);
+}
+
+.btn.error {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  box-shadow: 0 0 25px rgba(255, 100, 100, 0.6);
 }

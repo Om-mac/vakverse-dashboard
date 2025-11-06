@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>🏠 Smart Home Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -45,8 +44,23 @@
     </div>
   </main>
 
+  <!-- 🚪 Door Control Section -->
   <section class="controls">
-    <button class="btn glass" onclick="openDoor()">🔓 Open Door</button>
+    <div class="door-control glass">
+      <button id="doorBtn" class="btn glass" onclick="toggleDoorInput()">🔒 Open Door</button>
+
+      <div id="doorInputWrapper" class="hidden">
+        <input
+          type="password"
+          id="doorPassword"
+          placeholder="Enter secret password"
+          class="door-input"
+        />
+        <button class="confirm-btn" onclick="openDoor()">✅ Confirm</button>
+      </div>
+
+      <p id="doorStatus" class="status-text"></p>
+    </div>
   </section>
 
   <footer>
